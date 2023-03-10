@@ -6,30 +6,26 @@ on:
 
 jobs:
 
-  # Update
+  # Deploy
 
-  update:
+  deploy:
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Install Python
+        uses: actions/setup-python@v2
         with:
-          persist-credentials: false
-          fetch-depth: 0
-      - name: Install livemark
-        run: pip install livemark
-      - name: Install dependencies
-        run: livemark run install
-      - name: Update data
-        run: livemark run data
-      - name: Build site
-        run: livemark build
-      - name: Commit files
+          python-version: 3.8
+      - name: Install and build site
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "Github Action"
-          git commit -a -m "Updated data"
-      - name: Push changes
-        uses: ad-m/github-push-action@master
+          echo '!**/*.html' >> .gitignore
+          make install
+          livemark build
+      - name: Publush to Github Pages
+        uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
+          branch: site
+          create_branch: true
+          push_options: '--force'

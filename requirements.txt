@@ -1,5 +1,3 @@
-wheel
-neovim
 pylama
 black
 ipython
