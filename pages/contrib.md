@@ -30,7 +30,7 @@ $ pip install livemark
 
 Run the following command to install dependencies:
 
-```bash task id=install
+```bash
 pip install -r requirements.txt
 ```
 
