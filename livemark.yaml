@@ -5,6 +5,9 @@ about:
 github:
   user: frictionlessdata
   repo: dataschool
+counter:
+  type: plausible
+  code: dataschool.frictionlessdata.io
 topics:
   selector: h2
 site:
